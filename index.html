@@ -13,13 +13,21 @@
 <body>
     <div class="container">
         <div class="app">
-            <h1>Namnsdagar</h1>
+            <h1>Name days</h1>
 
+            <form id="search-form">
+                <div class="form-group" id="query-wrapper">
+                    <input type="text" id="query" name="query" class="form-control" placeholder="Search for a name">
+                    <input type="date" id="query" name="query" class="form-control" placeholder="Search for a date">
+                    <input type="submit" id="search" name="search" class="btn btn-light" value="🔍">
+                </div>
+            </form>
         </div>
     </div>
-    
 
-    <script src="assets/scripts/namesday.js"></script>
+    <div id="search-results" class="row row-cols-1 row-cols-md-2 row-cols-lg-3"></div>
+    
+    <script src="assets/scripts/nameday.js"></script>
     <script src="assets/scripts/app.js"></script>
 </body>
 </html>
