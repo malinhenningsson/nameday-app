@@ -7,8 +7,8 @@
 const getNamedayByName = async (name, country) => {
     const response = await fetch(`https://api.abalin.net/getdate?name=${name}&country=${country}`);
 
-    if (!resopnse.ok) {
-        throw new Error(`Request not ok, status code returned was: ${request.status}`);
+    if (!response.ok) {
+        throw new Error(`Request not ok, status code returned was: ${response.status}`);
     }
 
     const data = await response.json();
@@ -19,8 +19,8 @@ const getNamedayByName = async (name, country) => {
  const getNamedayByDate = async (month, day, country) => {
     const response = await fetch(`https://api.abalin.net/namedays?country=${country}&month=${month}&day=${day}`);
 
-    if (!resopnse.ok) {
-        throw new Error(`Request not ok, status code returned was: ${request.status}`);
+    if (!response.ok) {
+        throw new Error(`Request not ok, status code returned was: ${response.status}`);
     }
 
     const data = await response.json();
