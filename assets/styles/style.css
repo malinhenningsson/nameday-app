@@ -7,9 +7,28 @@
 body {
     background-color: #444;
     color: #fefefe;
-    text-align: center;
 }
 
-#search-form input {
-    margin: 1rem;
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.app {
+    margin-top: 1.5rem;
+}
+
+.name-or-date {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.date-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.date-wrapper .form-control {
+    width: 45%;
 }
