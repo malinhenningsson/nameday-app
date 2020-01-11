@@ -4,7 +4,7 @@
  */
 
  // Get data by search of name
-const getNamedayByName = async (name, country) => {
+const getNamedayByName = async (name, country = se) => {
     const response = await fetch(`https://api.abalin.net/getdate?name=${name}&country=${country}`);
 
     if (!response.ok) {
@@ -27,5 +27,5 @@ const getNamedayByName = async (name, country) => {
     return data;
 }
 
-getNamedayByName('Malin', 'se');
-getNamedayByDate('12', '10', 'se');
+// getNamedayByName('Malin', 'se');
+// getNamedayByDate('12', '10', 'se');

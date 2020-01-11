@@ -19,7 +19,7 @@
             <form id="search-form">
                 <div class="form-group">
                     <select class="form-control" id="country" required>
-                        <option selected>Choose a country</option>
+                        <option value="" selected>Choose a country</option>
                         <option value="at">Austria</option>
                         <option value="hr">Croatia</option>
                         <option value="cz">Czechia</option>
@@ -49,7 +49,7 @@
                     <div class="form-row date-wrapper">
                         <div class="col">
                             <select class="form-control" id="month" required>
-                                    <option selected>Month</option>
+                                    <option value="0" selected>Month</option>
                                     <option value="1">January</option>
                                     <option value="2">February</option>
                                     <option value="3">March</option>
@@ -65,7 +65,7 @@
                                 </select>
                         </div>
                         <div class="col">
-                            <input type="number" id="day" name="day" class="form-control" min="1" max="31" placeholder="Day">
+                            <input type="number" id="day" name="day" class="form-control" value="0" min="1" max="31" placeholder="Day">
                         </div>
                     </div>
                 </div>
