@@ -4,7 +4,56 @@
  */
 
 // Getting value from input-fields in HTML
-const searchResult = document.querySelector('#search-result');
+const searchResultEl = document.querySelector('#search-results');
+
+
+// Output search result in HTML
+const renderSearchResultName = (data, country) => {
+    console.log(data);
+    searchResultEl.innerHTML += `
+        <div class="col">
+            <div class="card bg-light text-dark mt-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Name: ${data.name}</h5>
+                    <p class="card-text">Date: ${data.day}/${data.month}</p>
+                    <p class="card-text">Country: ${country}</p>
+                </div>
+             </div>
+            </div>
+    `;
+}
+
+const renderSearchResultDate = (data, country) => {
+    console.log(data);
+    searchResultEl.innerHTML += `
+        <div class="col">
+            <div class="card bg-light text-dark mt-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Name(s): ${data.namedays[country]}</h5>
+                    <p class="card-text">Date: ${data.dates.day}/${data.dates.month}</p>
+                    <p class="card-text">Country: ${country}</p>
+                </div>
+             </div>
+            </div>
+    `;
+}
+
+// Function that handles search-result
+const handleSearchResultName = data => {
+    searchResultEl.innerHTML = '';
+    data.results.forEach(name => {
+        renderSearchResultName(name, data[ 'country name' ]);
+
+    });
+}
+
+const handleSearchResultDate = (data, country) => {
+    searchResultEl.innerHTML = '';
+    data.data.forEach(date => {
+        renderSearchResultDate(date, country);
+    })
+}
+
 
 // Get user search when pushing submit
 document.querySelector('#search-form').addEventListener('submit', function(e) {
@@ -17,7 +66,6 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
 
     // Search by name
     if (name.length > 0) {
-        console.log(name.length);
         getNamedayByName(name, country)
         .then(response => {
             handleSearchResultName(response);
@@ -48,34 +96,7 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
 
 })
 
-
-// Function that handles search-result
-
-const handleSearchResultName = data => {
-    console.log(data);
-    console.log(data[ 'country code' ]);
-    console.log(data[ 'country name' ]);
-
-    data.results.forEach(name => {
-        console.log(name.name);
-        console.log(name.day);
-        console.log(name.month);
-    });
-}
-
-const handleSearchResultDate = (data, country) => {
-    console.log(data);
-
-    data.data.forEach(date => {
-        console.log(date.dates.day, date.dates.month);
-        console.log(date.namedays[country]);
-    })
-}
-
 // Make it only possible to fill out either name or date
 
-// Divide into one funtion for name and one function for date
-
-// Output search result in HTML
 
 // Fetch API through same function but just exchange parts of the URL in template-string?
