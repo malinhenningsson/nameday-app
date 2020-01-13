@@ -65,7 +65,16 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
     const day = Number(document.querySelector('#day').value);
 
     // Search by name
-    if (name.length > 0) {
+    if (name.length > 0 && (month > 0 && day > 0)) {
+        // Create div with error, filled in both country and date
+        searchResultEl.innerHTML += `<div class="alert alert-warning mt-4">You selected both country and date. Please try again with only one alternative.</div>`;
+        
+        // Reset page
+        document.querySelector('#name').value = '';
+        document.querySelector('#country').value = ''; 
+        document.querySelector('#month').value = 0;
+        document.querySelector('#day').value = '';
+    } else if (name.length > 0) {
         getNamedayByName(name, country)
         .then(response => {
             handleSearchResultName(response);
@@ -100,3 +109,6 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
 
 
 // Fetch API through same function but just exchange parts of the URL in template-string?
+
+
+// Create reset function for page
