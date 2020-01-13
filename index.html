@@ -64,13 +64,16 @@
                                     <option value="12">December</option>
                                 </select>
                         </div>
-                        <div class="col">
-                            <input type="number" id="day" name="day" class="form-control" value="0" min="1" max="31" placeholder="Day">
+                        <div class="col day">
+                            <input type="number" id="day" name="day" class="form-control" min="1" max="31" placeholder="Day">
+                            <span class="validity"></span>
                         </div>
                     </div>
                 </div>
-
-                <input type="submit" id="search" name="search" class="btn btn-info mt-4" value="Search">
+                <div class="form-group mt-4">
+                    <input type="submit" id="search" name="search" class="btn btn-info" value="Search">
+                    <input type="reset" id="reset" name="reset" class="btn btn-danger" value="Reset">
+                </div>
             </form>
             
             <div id="search-results"></div>
