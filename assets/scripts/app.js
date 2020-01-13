@@ -65,33 +65,35 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
     const day = Number(document.querySelector('#day').value);
 
     // Search by name
-    if (name.length > 0 && (month > 0 && day > 0)) {
+    if (name && (month && day)) {
         // Create div with error, filled in both country and date
-        searchResultEl.innerHTML += `<div class="alert alert-warning mt-4">You selected both country and date. Please try again with only one alternative.</div>`;
+        searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">You selected both country and date. Please try again with only one alternative.</div>`;
         
         // Reset page
         document.querySelector('#name').value = '';
         document.querySelector('#country').value = ''; 
         document.querySelector('#month').value = 0;
         document.querySelector('#day').value = '';
-    } else if (name.length > 0) {
+    } else if (name) { // testa om name = true istället
         getNamedayByName(name, country)
         .then(response => {
             handleSearchResultName(response);
          })
         .catch(err => {
+            // Lägg in felmeddelande / status kod (se abalin API)
             alert(err);
          })
     
          document.querySelector('#name').value = '';
          document.querySelector('#country').value = '';
 
-    } else if (month > 0 && day > 0) {
+    } else if (month && day) { // testa om month = true och date = true
         getNamedayByDate(month, day, country)
        .then(response => {
            handleSearchResultDate(response, country);
         })
        .catch(err => {
+            // Lägg in felmeddelande / status kod (se abalin API)
            alert(err);
         })
     
@@ -103,6 +105,12 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
         alert('You did something wrong');
     }
 
+})
+
+document.querySelector('#search-form').addEventListener('reset', function(e) {
+    // e.preventDefault();
+
+    searchResultEl.innerHTML = '';
 })
 
 // Make it only possible to fill out either name or date
