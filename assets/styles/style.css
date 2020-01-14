@@ -5,7 +5,11 @@
 }
 
 body {
-    background-color: #444;
+    background-color: #002F3B;
+    background-image: url(../images/background.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: auto;
     color: #fefefe;
 }
 
@@ -16,9 +20,42 @@ h1 {
 
 .app {
     margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .name-or-date {
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+input#search.btn.btn-info {
+    background-color: #027F9D;
+    border: 1px solid #026880;
+}
+
+input#search.btn.btn-info:hover {
+    background-color: #026880;
+}
+
+input#reset.btn.btn-danger {
+    background-color: #CD9454;
+    border: 1px solid #A17542;
+}
+input#reset.btn.btn-danger:hover {
+    background-color: #A17542;
+}
+
+div.card {
+    border-radius: 1rem;
+}
+
+div.card-body.text-center {
+    color: #026880;
+}
+
+div.card-body h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
 }
