@@ -9,7 +9,6 @@ const searchResultEl = document.querySelector('#search-results');
 
 // Output search result in HTML
 const renderSearchResultName = (data, country) => {
-    console.log(data);
     searchResultEl.innerHTML += `
         <div class="col">
             <div class="card bg-light text-dark mt-4">
@@ -24,7 +23,6 @@ const renderSearchResultName = (data, country) => {
 }
 
 const renderSearchResultDate = (data, country) => {
-    console.log(data);
     searchResultEl.innerHTML += `
         <div class="col">
             <div class="card bg-light text-dark mt-4">
@@ -38,12 +36,25 @@ const renderSearchResultDate = (data, country) => {
     `;
 }
 
+const renderSearchResultTimezone = (data, country, timezone) => {
+    searchResultEl.innerHTML += `
+    <div class="col">
+        <div class="card bg-light text-dark mt-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">Todays name: ${data.namedays[country]}</h5>
+                <p class="card-text">Timezone: ${timezone}</p>
+                <p class="card-text">Country: ${country}</p>
+            </div>
+         </div>
+        </div>
+`;
+}
+
 // Function that handles search-result
 const handleSearchResultName = data => {
     searchResultEl.innerHTML = '';
     data.results.forEach(name => {
         renderSearchResultName(name, data[ 'country name' ]);
-
     });
 }
 
@@ -54,6 +65,25 @@ const handleSearchResultDate = (data, country) => {
     })
 }
 
+const handleSearchResultTimezone = (data, country, timezone) => {
+    searchResultEl.innerHTML = '';
+    data.data.forEach(date => {
+        renderSearchResultTimezone(date, country, timezone);
+    })
+}
+
+const emptyValueInForm = () => {
+    document.querySelector('#name').value = '';
+    document.querySelector('#country').value = ''; 
+    document.querySelector('#month').value = 0;
+    document.querySelector('#day').value = '';
+    document.querySelector('#timezone').value = '';
+
+}
+
+const renderErrorMessage = () => {
+    searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Something went wrong, please try again.</div>`;
+}
 
 // Get user search when pushing submit
 document.querySelector('#search-form').addEventListener('submit', function(e) {
@@ -63,30 +93,24 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
     const country = document.querySelector('#country').value;
     const month = Number(document.querySelector('#month').value);
     const day = Number(document.querySelector('#day').value);
+    const timezone = document.querySelector('#timezone').value;
+
 
     // Search by name
-    if (name && (month && day)) {
+    if (name && (month && day) || name && timezone || (month && day) && timezone) {
         // Create div with error, filled in both country and date
-        searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">You selected both country and date. Please try again with only one alternative.</div>`;
+        searchResultEl.innerHTML += `<div class="alert alert-warning mt-4">You selected too many values. Please try again with only one search-alternative, in addition to the required one.</div>`;
         
-        // Reset page
-        document.querySelector('#name').value = '';
-        document.querySelector('#country').value = ''; 
-        document.querySelector('#month').value = 0;
-        document.querySelector('#day').value = '';
     } else if (name) { // testa om name = true istället
         getNamedayByName(name, country)
         .then(response => {
             handleSearchResultName(response);
-         })
+        })
         .catch(err => {
             // Lägg in felmeddelande / status kod (se abalin API)
-            alert(err);
-         })
-    
-         document.querySelector('#name').value = '';
-         document.querySelector('#country').value = '';
-
+            // Skapa rednerErrorMessage
+            renderErrorMessage(err);
+         })   
     } else if (month && day) { // testa om month = true och date = true
         getNamedayByDate(month, day, country)
        .then(response => {
@@ -94,29 +118,25 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
         })
        .catch(err => {
             // Lägg in felmeddelande / status kod (se abalin API)
-           alert(err);
+            // Skapa rednerErrorMessage
+           renderErrorMessage(err);
         })
-    
-        document.querySelector('#month').value = 0;
-        document.querySelector('#day').value = '';
-        document.querySelector('#country').value = '';
-
+    } else if (timezone) {
+        getNamedayByTimezone(timezone, country)
+        .then(response => {
+            handleSearchResultTimezone(response, country, timezone);
+        })
+        .catch(err => {
+            renderErrorMessage(err);
+        })
     } else {
-        alert('You did something wrong');
+        searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Something went wrong. Please try again.</div>`;
     }
 
+    emptyValueInForm();
 })
 
+// Reset page
 document.querySelector('#search-form').addEventListener('reset', function(e) {
-    // e.preventDefault();
-
     searchResultEl.innerHTML = '';
 })
-
-// Make it only possible to fill out either name or date
-
-
-// Fetch API through same function but just exchange parts of the URL in template-string?
-
-
-// Create reset function for page
