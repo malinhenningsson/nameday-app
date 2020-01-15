@@ -6,6 +6,14 @@
 // Getting search-form in HTML
 const searchResultEl = document.querySelector('#search-results');
 
+// Change first letter to capital
+const changeCaseFirstLetter = (name) => {
+   if(typeof name === 'string') {
+           return name.charAt(0).toUpperCase() + name.slice(1);
+   }
+   return null;
+}
+
 // Output search result in HTML for name
 const renderSearchResultName = (data, country) => {
     searchResultEl.innerHTML += `
@@ -55,8 +63,13 @@ const renderSearchResultTimezone = (data, country, timezone) => {
 // Handle search-result for name
 const handleSearchResultName = (data, name) => {
     searchResultEl.innerHTML = '';
+    let nameCompare = changeCaseFirstLetter(name);
+
     if (data.results.length > 0) {
-        data.results.forEach(name => {
+        let resultList = data.results.filter(item => {
+            return item.name.includes(nameCompare);
+        })
+        resultList.forEach(name => {
             renderSearchResultName(name, data[ 'country name' ]);
         });
     } else {
