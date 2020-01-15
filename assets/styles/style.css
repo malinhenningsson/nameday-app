@@ -48,11 +48,14 @@ input#reset.btn.btn-danger:hover {
 }
 
 div.card {
+    background-color: rgba(0, 71, 87, 0.8);
+    margin-top: 1.5rem;
     border-radius: 1rem;
 }
 
 div.card-body.text-center {
-    color: #026880;
+    color: #fefefe;
+
 }
 
 div.card-body h2 {
