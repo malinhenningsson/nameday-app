@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Namnsdag</title>
+    <title>Name Day App</title>
 
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- CSS styling -->
     <link rel="stylesheet" href="assets/styles/style.css">
 
 </head>
 <body>
 
     <div class="container">
-        <div class="app">
+        <div class="app col-sm-12 col-md-12 col-lg-10">
             <h1>Name Day</h1>
 
             <form id="search-form">
                 <div class="form-group">
-                    <select class="form-control" id="country" required>
+                    <select class="form-control" id="country" required="required">
                         <option value="" selected>Choose a country</option>
                         <option value="at">Austria</option>
                         <option value="hr">Croatia</option>
@@ -39,16 +42,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="inputName">Search for a name:</label>
+                    <label for="name-search">Search for a name:</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Name">
                 </div>
                     
                 <div class="form-group" id="search-date">
-                    <label for="inputDate"><span class="name-or-date">Or</span> search for a date:</label>
-                    
+                    <label for="date-search"><span class="bold-text">Or</span> search for a date:</label>
                     <div class="form-row date-wrapper">
                         <div class="col">
-                            <select class="form-control" id="month" required>
+                            <select class="form-control" id="month">
                                     <option value="0" selected>Month</option>
                                     <option value="1">January</option>
                                     <option value="2">February</option>
@@ -66,12 +68,12 @@
                         </div>
                         <div class="col day">
                             <input type="number" id="day" name="day" class="form-control" min="1" max="31" placeholder="Day">
-                            <span class="validity"></span>
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="timezone-search">Bonus feature! Get name day for today with a specific timezone:</label>
+                    <label for="timezone-search"><span class="bold-text">Bonus feature!</span> Get name day for today with a specific timezone:</label>
                     <select class="form-control" id="timezone">
                         <option value="" selected>Choose a timezone</option>
                         <option value="America/Chicago">America/Chicago UTC-6</option>
@@ -90,9 +92,9 @@
                         <option value="Europe/Vienna">Europe/Vienna UTC+1 </option>
                         <option value="Europe/Warsaw">Europe/Warsaw UTC+1</option>
                         <option value="Europe/Zagreb">Europe/Zagreb UTC+1</option>
-
                     </select>
                 </div>
+
                 <div class="form-group mt-4">
                     <input type="submit" id="search" name="search" class="btn btn-info" value="Search">
                     <input type="reset" id="reset" name="reset" class="btn btn-danger" value="Reset">
@@ -104,6 +106,8 @@
         </div>
     </div>
 
+    <!-- JavaScripts -->
+    <script src="assets/scripts/values.js"></script>
     <script src="assets/scripts/nameday.js"></script>
     <script src="assets/scripts/app.js"></script>
 </body>
