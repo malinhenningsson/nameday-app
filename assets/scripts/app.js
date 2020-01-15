@@ -6,26 +6,18 @@
 // Getting search-form in HTML
 const searchResultEl = document.querySelector('#search-results');
 
-// Change first letter tó capital
-const changeCaseFirstLetter = (name) => {
-    if(typeof name === 'string') {
-            return name.charAt(0).toUpperCase() + name.slice(1);
-    }
-    return null;
-}
-
 // Output search result in HTML for name
 const renderSearchResultName = (data, country) => {
     searchResultEl.innerHTML += `
         <div class="col">
-            <div class="card bg-light text-dark mt-4">
+            <div class="card">
                 <div class="card-body text-center">
                     <h2 class="card-title">${data.name}</h5>
                     <p class="card-text">Date: ${data.day} ${reverseMonthValue(data.month)}</p>
                     <p class="card-text">Country: ${country}</p>
                 </div>
              </div>
-            </div>
+        </div>
     `;
 }
 
@@ -33,29 +25,29 @@ const renderSearchResultName = (data, country) => {
 const renderSearchResultDate = (data, country) => {
     searchResultEl.innerHTML += `
         <div class="col">
-            <div class="card bg-light text-dark mt-4">
+            <div class="card">
                 <div class="card-body text-center">
                     <h2 class="card-title">${data.namedays[country]}</h5>
                     <p class="card-text">Date: ${data.dates.day} ${reverseMonthValue(data.dates.month)}</p>
                     <p class="card-text">Country: ${reverseCountryValue(country)}</p>
                 </div>
              </div>
-            </div>
+        </div>
     `;
 }
 
 // Output search result in HTML for timeszone
 const renderSearchResultTimezone = (data, country, timezone) => {
     searchResultEl.innerHTML += `
-    <div class="col">
-        <div class="card bg-light text-dark mt-4">
-            <div class="card-body text-center">
-                <h2 class="card-title">Happy name day: ${data.namedays[country]}!</h5>
-                <p class="card-text">Date: ${data.dates.day} ${reverseMonthValue(data.dates.month)}</p>
-                <p class="card-text">Timezone: ${timezone}</p>
-                <p class="card-text">Country: ${reverseCountryValue(country)}</p>
+        <div class="col">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2 class="card-title">Happy name day: ${data.namedays[country]}!</h5>
+                    <p class="card-text">Date: ${data.dates.day} ${reverseMonthValue(data.dates.month)}</p>
+                    <p class="card-text">Timezone: ${timezone}</p>
+                    <p class="card-text">Country: ${reverseCountryValue(country)}</p>
+                </div>
             </div>
-         </div>
         </div>
 `;
 }
@@ -97,7 +89,7 @@ const emptyValueInForm = () => {
     document.querySelector('#timezone').value = '';
 }
 
-// Error message
+// General error message
 const renderErrorMessage = () => {
     searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Something went wrong, please try again.</div>`;
 }
@@ -123,7 +115,7 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
                 handleSearchResultName(response, name);
             })
             .catch(err => {
-                renderErrorMessage(err);
+                renderErrorMessage();
             })   
         }
     } else if (month && day) {
@@ -132,7 +124,7 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
             handleSearchResultDate(response, country);
         })
         .catch(err => {
-            renderErrorMessage(err);
+            renderErrorMessage();
         })
     } else if (timezone) {
         getNamedayByTimezone(timezone, country)
@@ -140,7 +132,7 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
             handleSearchResultTimezone(response, country, timezone);
         })
         .catch(err => {
-            renderErrorMessage(err);
+            renderErrorMessage();
         })
     } else {
         renderErrorMessage();
