@@ -8,10 +8,7 @@ const searchResultEl = document.querySelector('#search-results');
 
 // Change first letter to capital
 const changeCaseFirstLetter = (name) => {
-    if(typeof name === 'string') {
-        return name.charAt(0).toUpperCase() + name.slice(1);
-    }
-    return null;
+    return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
 // General error message
