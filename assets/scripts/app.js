@@ -8,10 +8,32 @@ const searchResultEl = document.querySelector('#search-results');
 
 // Change first letter to capital
 const changeCaseFirstLetter = (name) => {
-   if(typeof name === 'string') {
-           return name.charAt(0).toUpperCase() + name.slice(1);
-   }
-   return null;
+    if(typeof name === 'string') {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+    return null;
+}
+
+// General error message
+const renderGeneralErrorMessage = () => {
+    searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Something went wrong, please try again.</div>`;
+}
+
+// Error message name
+const renderNameErrorMessage = (name) => {
+    if (name.length < 3) {
+        searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Your name doesn't have enough characters, please select a name with more than three characters.</div>`;
+    } else {
+        searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">The name '${changeCaseFirstLetter(name)}' does not exist in selected country, please try something else.</div>`;
+    }
+}
+
+// Handle search-result for timezone
+const handleSearchResultTimezone = (data, country, timezone) => {
+    searchResultEl.innerHTML = '';
+    data.data.forEach(date => {
+        renderSearchResultTimezone(date, country, timezone);
+    })
 }
 
 // Output search result in HTML for name
@@ -69,11 +91,15 @@ const handleSearchResultName = (data, name) => {
         let resultList = data.results.filter(item => {
             return item.name.includes(nameCompare);
         })
-        resultList.forEach(name => {
-            renderSearchResultName(name, data[ 'country name' ]);
-        });
+        if (resultList.length > 0) {
+            resultList.forEach(name => {
+                renderSearchResultName(name, data[ 'country name' ]);
+            });
+        } else {
+            renderNameErrorMessage(name);
+        }
     } else {
-        searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">The name '${name}' does not exist in selected country, please try something else.</div>`;
+        renderNameErrorMessage(name);
     }
 }
 
@@ -82,14 +108,6 @@ const handleSearchResultDate = (data, country) => {
     searchResultEl.innerHTML = '';
     data.data.forEach(date => {
         renderSearchResultDate(date, country);
-    })
-}
-
-// Handle search-result for timezone
-const handleSearchResultTimezone = (data, country, timezone) => {
-    searchResultEl.innerHTML = '';
-    data.data.forEach(date => {
-        renderSearchResultTimezone(date, country, timezone);
     })
 }
 
@@ -102,10 +120,6 @@ const emptyValueInForm = () => {
     document.querySelector('#timezone').value = '';
 }
 
-// General error message
-const renderErrorMessage = () => {
-    searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Something went wrong, please try again.</div>`;
-}
 
 // Get user search when submitting
 document.querySelector('#search-form').addEventListener('submit', function(e) {
@@ -121,14 +135,14 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
         searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">You selected too many values. Please try again with only one search-alternative, in addition to the required one.</div>`;
     } else if (name) {
         if (name.length < 3) {
-            searchResultEl.innerHTML = `<div class="alert alert-warning mt-4">Your name doesn't have enough characters, please select a name with more than three characters.</div>`;
+            renderNameErrorMessage(name);
         } else {
             getNamedayByName(name, country)
             .then(response => {
                 handleSearchResultName(response, name);
             })
             .catch(err => {
-                renderErrorMessage();
+                renderGeneralErrorMessage();
             })   
         }
     } else if (month && day) {
@@ -137,7 +151,7 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
             handleSearchResultDate(response, country);
         })
         .catch(err => {
-            renderErrorMessage();
+            renderGeneralErrorMessage();
         })
     } else if (timezone) {
         getNamedayByTimezone(timezone, country)
@@ -145,10 +159,10 @@ document.querySelector('#search-form').addEventListener('submit', function(e) {
             handleSearchResultTimezone(response, country, timezone);
         })
         .catch(err => {
-            renderErrorMessage();
+            renderGeneralErrorMessage();
         })
     } else {
-        renderErrorMessage();
+        renderGeneralErrorMessage();
     }
     emptyValueInForm();
 })
